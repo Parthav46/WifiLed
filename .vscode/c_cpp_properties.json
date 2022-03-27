@@ -5,12 +5,13 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/src/**",
-                "/usr/lib/avr/include/**"
+                "~/Downloads/arduino-1.8.19/hardware/arduino/avr/cores/arduino/**",
+                "~/Downloads/arduino-1.8.19/hardware/tools/avr/avr/include/**",
+                "~/.arduino15/packages/esp8266/hardware/esp8266/3.0.2/variants/nodemcu/**"
             ],
-            "defines": [
-                "__AVR_ATmega32A__"
+            "forcedInclude": [
+                "Arduino.h"
             ],
-            "compilerPath": "/usr/bin/avr-gcc",
             "cStandard": "c11",
             "cppStandard": "c++17",
             "intelliSenseMode": "clang-x64"
