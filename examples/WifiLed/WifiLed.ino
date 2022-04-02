@@ -3,31 +3,31 @@
 #define NUM_LEDS 15
 #define DATA_PIN D0
 #define RGB_ORDER GRB
+#define BRIGHTNESS 32
 
 CRGB leds[NUM_LEDS];
+uint8_t o = 0;
 
 void setup()
 {
     FastLED.addLeds<WS2812B, DATA_PIN, RGB_ORDER>(leds, NUM_LEDS);
-    Serial.begin(115200);
-    int8_t Brightness = 10;
-    delay(1000);
-
-    for (int i = 0; i < NUM_LEDS; i++) {
-        leds[i] = CRGB::White;
-    }
-    FastLED.setBrightness(Brightness);
-    FastLED.show();
-    delay(1000);
-    Serial.println("Reading brightness now:");
+    delay(1000);    
 }
 
 void loop()
 {
-    if (Serial.available()) {
-        uint8_t Brightness = Serial.readStringUntil('\n').toInt();
-        Serial.println(Brightness);
-        FastLED.setBrightness(Brightness);
-        FastLED.show();
+    SetColorFromPalette(RainbowColors_p, o);
+    o = (o + 1) % 256;
+    delay(50);
+}
+
+void SetColorFromPalette(CRGBPalette16 pallet, uint8_t offset)
+{
+    uint16_t i;
+    for (i = 0; i < NUM_LEDS; i++)
+    {
+        uint8_t index = ((i * 8) + offset) % 256;
+        leds[i] = ColorFromPalette(pallet, index, BRIGHTNESS, LINEARBLEND);
     }
+    FastLED.show();
 }
